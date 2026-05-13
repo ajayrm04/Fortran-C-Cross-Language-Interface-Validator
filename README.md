@@ -44,6 +44,10 @@ The validator parses both Fortran source files and C headers, normalises their t
 
 # 2. Run the validator on the included test cases
 ./run.sh
+
+# 3. Run a specific case folder
+./build.sh testcases/1/sample.f90 testcases/1/sample.h
+./run.sh testcases/1/sample.f90 testcases/1/sample.h
 ```
 
 ### Manual Usage

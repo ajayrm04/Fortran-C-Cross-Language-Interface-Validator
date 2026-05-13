@@ -135,6 +135,8 @@ class Validator:
     def _expected_c_mode(self, fp: ParamInfo) -> PassingMode:
         """What passing mode should the C side use given the Fortran side?"""
         if fp.passing_mode == PassingMode.VALUE:
+            if fp.base_type.endswith('*') or fp.base_type == 'void*':
+                return PassingMode.POINTER
             return PassingMode.VALUE
         elif fp.is_array:
             return PassingMode.POINTER
@@ -145,10 +147,16 @@ class Validator:
         """Check if two canonical types are ABI-compatible."""
         if a == b:
             return True
-        if a.endswith('*') and b.endswith('*'):
-            if 'void' in (a, b):
+        a_is_ptr = a.endswith('*')
+        b_is_ptr = b.endswith('*')
+        if a_is_ptr or b_is_ptr:
+            base_a = a.rstrip('*')
+            base_b = b.rstrip('*')
+            if base_a == base_b:
                 return True
-            return a == b
+            if 'void' in (base_a, base_b):
+                return True
+            return False
         synonyms = [
             {'int32', 'int', 'long'},
             {'int64', 'long long'},

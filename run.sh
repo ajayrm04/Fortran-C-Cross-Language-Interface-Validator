@@ -4,6 +4,15 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+	echo "Usage: ./run.sh [fortran_file] [c_header] [--json]"
+	echo ""
+	echo "Defaults:"
+	echo "  testcases/sample.f90"
+	echo "  testcases/sample.h"
+	exit 0
+fi
+
 FORTRAN_FILE="${1:-$SCRIPT_DIR/testcases/sample.f90}"
 C_HEADER="${2:-$SCRIPT_DIR/testcases/sample.h}"
 
