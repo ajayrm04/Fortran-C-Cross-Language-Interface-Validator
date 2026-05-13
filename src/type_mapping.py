@@ -61,6 +61,8 @@ C_TO_CANONICAL = {
     "intptr_t": "intptr_t",
     "float": "float",
     "double": "double",
+    "double _Complex": "double_complex",
+    "float _Complex": "float_complex",
     "long double": "long_double",
     "bool": "bool",
     "_Bool": "bool",
